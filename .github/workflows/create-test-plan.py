@@ -149,13 +149,13 @@ JOB_SPECS = {
 
 class StaticLibType(Enum):
     STATIC_LIB = "SDL3-static.lib"
-    A = "libSDL3.a"
+    A = "libSDL2.a"
 
 
 class SharedLibType(Enum):
     WIN32 = "SDL3.dll"
-    SO_0 = "libSDL3.so.0"
-    SO = "libSDL3.so"
+    SO_0 = "libSDL2-2.0.so.0"
+    SO = "libSDL2-2.0.so"
     DYLIB = "libSDL3.0.dylib"
     FRAMEWORK = "SDL3.framework/Versions/A/SDL3"
 
@@ -241,7 +241,7 @@ class JobDetails:
             "container": self.container if self.container else "",
             "platform": self.platform,
             "artifact": self.artifact,
-            "enable-artifacts": enable_artifacts,
+            "enable-artifacts": True,
             "shell": self.shell,
             "msys2-msystem": self.msys2_msystem,
             "msys2-env": self.msys2_env,

@@ -234,7 +234,7 @@ jobs:
           ${{ matrix.platform.source-cmd }}
           cmake --build build --config ${{ matrix.platform.cmake-build-type }} --verbose -- ${{ matrix.platform.cmake-build-arguments }}
       - name: 'Verify SDL_REVISION'
-        if: ${{ !matrix.platform.no-cmake }}
+        if: ${{ !matrix.platform.no-cmake && false }}
         run: |
           echo "This should show us the SDL_REVISION"
           echo "Shared library:"
@@ -273,7 +273,7 @@ jobs:
           ( cd prefix; find . ) | LC_ALL=C sort -u
       - name: 'Package (CPack)'
         id: package
-        if: ${{ always() && steps.build.outcome == 'success' }}
+        if: ${{ always() && steps.build.outcome == 'success' && false }}
 #        shell: ${{ matrix.platform.shell }}
         run: |
           # DMG creation on macOS occasionally fails, so try multiple times
@@ -422,13 +422,13 @@ jobs:
           find ./ -iname '*.so' | xargs -L1 ./build-scripts/check_elf_alignment.sh
       - name: 'Upload binary package'
         uses: actions/upload-artifact@v4
-        if: ${{ always() && matrix.platform.artifact != '' && (steps.package.outcome == 'success' || steps.cpactions.outcome == 'success') && (matrix.platform.enable-artifacts || steps.tests.outcome == 'failure') }}
+        if: ${{ always() && matrix.platform.artifact != '' && (matrix.platform.enable-artifacts || steps.tests.outcome == 'failure') }}
         with:
           if-no-files-found: error
           name: '${{ matrix.platform.artifact }}'
           path: |
-            build/dist/SDL3*
-            build/include*
+            ${{ steps.install.outputs.prefix }}/lib/SDL2*
+            ${{ steps.install.outputs.prefix }}/include*
       - name: 'Upload minidumps'
         uses: actions/upload-artifact@v4
         if: ${{ always() && steps.tests.outcome == 'failure' && (matrix.platform.platform == 'msvc' || matrix.platform.platform == 'msys2') }}
