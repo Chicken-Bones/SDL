@@ -41,8 +41,3 @@ jobs:
     uses: './.github/workflows/generic.yml'
     with:
       platforms: ${{ needs.controller.outputs.platforms-level1 }}
-  level2:
-    needs: [controller, level1]
-    uses: './.github/workflows/generic.yml'
-    with:
-      platforms: ${{ needs.controller.outputs.platforms-others }}

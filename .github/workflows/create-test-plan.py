@@ -849,7 +849,7 @@ def main():
     all_level_keys = (
         # Level 1
         (
-            "haiku",
+            "steamrt3-arm64",
         ),
     )
 
@@ -895,7 +895,7 @@ def main():
     remaining_keys = filtered_remaining_keys
 
     logger.info("Remaining: %r", remaining_keys)
-    all_level_platforms["others"] = tuple(all_platforms[key] for key in remaining_keys)
+    # all_level_platforms["others"] = tuple(all_platforms[key] for key in remaining_keys)
 
     if args.github_ci:
         for level, platforms in all_level_platforms.items():
